@@ -7,7 +7,7 @@ Board*
 Board::setup() {
 	Board* gameBoard = new Board();
 	return gameBoard;
-};
+}
 
 Board::Board() {
 	for (int i = 0; i < DIMENSION; i++) {
@@ -21,27 +21,26 @@ Board::Board() {
 	for (int i = 0; i < numberOfNumbers; i++) {
 		numbersUsed[i] = false;
 	}
-};
+}
 
 int
 Board::getNumber(int x, int y) {
 	return board[x][y];
-};
+}
 
 int
 Board::getDimension() {
 	return DIMENSION;
-};
+}
 
 void
 Board::setSquare(int x, int y, int input) {
 	board[x][y] = input;
 	squaresUsed[x][y] = true;
 	numbersUsed[input] = true;
-};
+}
 
 bool
 Board::isUsedNumber(int number) {
 	return numbersUsed[number];
-};
-
+}

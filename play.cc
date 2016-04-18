@@ -8,18 +8,18 @@ Play*
 Play::newGame() {
 	Play* game = new Play();
 	return game;
-};
+}
 
 Play::Play() {
 	turns = 0;
 	currentPlayer = 1;
 	board = Board::setup();
-};
+}
 
 Play::~Play() {
 	delete board;
 	board = NULL;
-};
+}
 
 bool 
 Play::playing() {
@@ -90,17 +90,17 @@ Play::playing() {
 	}
 
 	return continuePlaying;
-};
+}
 
 void 
 Play::updateTurn() {
 	turns++;
-};
+}
 
 void 
 Play::updatePlayer() {
 	currentPlayer = 3 - currentPlayer;	// updates player to 1, 2, 1, 2, ...
-};
+}
 
 void 
 Play::printRules()
@@ -119,7 +119,7 @@ Play::printRules()
 		<< "sum to 15.\n"
 		<< "One wrinkle: each number can only be placed ONCE." 
 		<< std::endl;
-};
+}
 
 void
 Play::display() {
@@ -145,7 +145,7 @@ Play::display() {
 	// print a bar as a visual divider of each "turn"
 	std::cout << "\n__________________________________" <<
 		"_____________________________" << std::endl;
-};
+}
 
 int
 Play::getIntegerInput() {
@@ -156,7 +156,7 @@ Play::getIntegerInput() {
 		std::cin.ignore(10000, '\n');
 	}
 	return input;
-};
+}
 
 bool
 Play::isValidNumber(int input) {
@@ -166,7 +166,7 @@ Play::isValidNumber(int input) {
 	}
 	
 	return true;
-};
+}
 
 bool
 Play::isUsedNumber(int input) {
@@ -175,7 +175,7 @@ Play::isUsedNumber(int input) {
 	}
 	
 	return false; 
-};
+}
 
 bool
 Play::isValidSquare(int x, int y) {
@@ -186,7 +186,7 @@ Play::isValidSquare(int x, int y) {
 	}
 
 	return true;
-};
+}
 
 bool
 Play::isUsedSquare(int x, int y) {
@@ -195,7 +195,7 @@ Play::isUsedSquare(int x, int y) {
 	}
 	
 	return false;
-};
+}
 
 bool
 Play::checkForWin(int x, int y, int input) {
@@ -265,4 +265,4 @@ Play::checkForWin(int x, int y, int input) {
 	}
 
 	return false;   // return false if none of the above cases sum to 15
-};
+}
