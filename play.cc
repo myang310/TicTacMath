@@ -1,28 +1,28 @@
 // Ming Yang
 
-include "board.h"
-include "print.h"
-include <iostream>
+#include "board.h"
+#include "play.h"
+#include <iostream>
 
-static Play*
+Play* 
 Play::newGame() {
 	Play* game = new Play();
 	return game;
-}
+};
 
 Play::Play() {
 	turns = 0;
-	currentPlay = 1;
-	board = Board.setup();
-}
+	currentPlayer = 1;
+	board = Board::setup();
+};
 
 Play::~Play() {
 	delete board;
 	board = NULL;
-}
+};
 
-bool
-Play::playMove() {
+bool 
+Play::playing() {
 	int input;		// user-given number to be played onto board
 	int x, y;		// user-given coordinates for the input
 
@@ -32,12 +32,12 @@ Play::playMove() {
 	
 	input = getIntegerInput();
 	while (!isValidNumber(input) || isUsedNumber(input)) {
-		if (!isValidNumber(input) {
+		if (!isValidNumber(input)) {
 			std::cout << "Input of " << input << " is not between 1 and 9.\n" << 
-					"Please enter a number between 1 and 9: " << std::endl;
+					"Please enter a number between 1 and 9: ";
 		}else {
 			std::cout << "The number " << input << " has been used.\n" << 
-					"Please try another number between 1 and 9: " << std::endl;
+					"Please try another number between 1 and 9: ";
 		}
 		
 		input = getIntegerInput();
@@ -45,16 +45,16 @@ Play::playMove() {
 	
 	// requests for the x- and y-coordinates of input
 	std::cout << "Please enter the x coordinate for your number (from 0-" 
-				 << GRID_SIZE - 1 << "): ";
+				 << board->getDimension() - 1 << "): ";
 	x = getIntegerInput();
 
 	std::cout << "Please enter the y coordinate for your number (from 0-" 
-				 << GRID_SIZE - 1 << "): ";
+				 << board->getDimension() - 1 << "): ";
 	y = getIntegerInput();
 
 	// checks for valid x- and y -coordinates; re-prompt for new x and y until valid 
 	while (!isValidSquare(x, y) || isUsedSquare(x, y)) {
-		if (!isValidSquare(x, y) {
+		if (!isValidSquare(x, y)) {
 			std::cout << "The coordinates given were not between 0 and " << 
 					board->getDimension() - 1 << "." << std::endl;
 		}else {
@@ -62,7 +62,13 @@ Play::playMove() {
 					<< std::endl;
 		}
 		std::cout << "Please try again.\n" << std::endl;
+		
+		std::cout << "Please enter the x coordinate for your number (from 0-" 
+				 << board->getDimension() - 1 << "): ";
 		x = getIntegerInput();
+		
+		std::cout << "Please enter the y coordinate for your number (from 0-" 
+				 << board->getDimension() - 1 << "): ";
 		y = getIntegerInput();
 	}
 	std::cout << std::endl;
@@ -70,8 +76,11 @@ Play::playMove() {
 	// updates the arrays with the input from user (x, y and input)
 	board->setSquare(x, y, input);	
 	
+	// display updated board to user
+	display();
+	
 	bool continuePlaying = true;
-	if (checkForWin(x, y, input) {
+	if (checkForWin(x, y, input)) {
 		std::cout << "\nCongratulations player " << currentPlayer
 			<< ", you win!" << std::endl;
 		continuePlaying = false;
@@ -81,41 +90,17 @@ Play::playMove() {
 	}
 
 	return continuePlaying;
-}
-
-void
-Play::display() {
-	int size = board->getDimension();
-
-	std::cout << "\t   0   1   2\n" << std::endl;
-	for (int i = 0; i < size; i++)
-	{
-		std::cout << "\t" << i << "  " << board->getNumber(i, 0);
-		
-		// prints a | in between the columns
-		for (int j = 1; j < size; j++)   			
-			std::cout << " | " << board->getNumber(i, j);
-
-		if (i <  - 1)
-			// prints a line in between rows
-			std::cout << "\n\t   ---------" << std::endl;   	
-	}		
-
-	// print a bar as a visual divider of each "turn"
-	std::cout << "\n__________________________________" <<
-		"_____________________________" << std::endl;
-}
-
+};
 
 void 
 Play::updateTurn() {
 	turns++;
-}
+};
 
 void 
 Play::updatePlayer() {
 	currentPlayer = 3 - currentPlayer;	// updates player to 1, 2, 1, 2, ...
-}
+};
 
 void 
 Play::printRules()
@@ -134,7 +119,33 @@ Play::printRules()
 		<< "sum to 15.\n"
 		<< "One wrinkle: each number can only be placed ONCE." 
 		<< std::endl;
-}
+};
+
+void
+Play::display() {
+	int size = board->getDimension();
+
+	std::cout << "\t   0   1   2\n" << std::endl;
+	for (int i = 0; i < size; i++)
+	{
+		std::cout << "\t" << i << "  " << board->getNumber(i, 0);
+		
+		// prints a | in between the columns
+		for (int j = 1; j < size; j++)   			
+			std::cout << " | " << board->getNumber(i, j);
+
+		if (i <  - 1) {
+			// prints a line in between rows
+			std::cout << "\n\t   ---------" << std::endl;
+		}else {
+			std::cout << "\n" << std::endl;
+		}
+	}		
+
+	// print a bar as a visual divider of each "turn"
+	std::cout << "\n__________________________________" <<
+		"_____________________________" << std::endl;
+};
 
 int
 Play::getIntegerInput() {
@@ -145,7 +156,7 @@ Play::getIntegerInput() {
 		std::cin.ignore(10000, '\n');
 	}
 	return input;
-}
+};
 
 bool
 Play::isValidNumber(int input) {
@@ -155,7 +166,7 @@ Play::isValidNumber(int input) {
 	}
 	
 	return true;
-}
+};
 
 bool
 Play::isUsedNumber(int input) {
@@ -164,7 +175,7 @@ Play::isUsedNumber(int input) {
 	}
 	
 	return false; 
-}
+};
 
 bool
 Play::isValidSquare(int x, int y) {
@@ -175,16 +186,16 @@ Play::isValidSquare(int x, int y) {
 	}
 
 	return true;
-}
+};
 
 bool
 Play::isUsedSquare(int x, int y) {
-	if (board.getNumber(x, y)) {
+	if (board->getNumber(x, y)) {
 		return true;
 	}
 	
 	return false;
-}
+};
 
 bool
 Play::checkForWin(int x, int y, int input) {
@@ -254,4 +265,4 @@ Play::checkForWin(int x, int y, int input) {
 	}
 
 	return false;   // return false if none of the above cases sum to 15
-}
+};

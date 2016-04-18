@@ -1,7 +1,7 @@
 // Ming Yang
 
-#ifndef PLAY_H
-#define PLAY_H
+#ifndef BOARD_H
+#define BOARD_H
 
 class Board {
 	public:
@@ -14,10 +14,10 @@ class Board {
 	private:
 		Board();
 		
-		int dimension = 3;
-		int board[dimension][dimension];
-		bool squaresUsed[dimension][dimension];
-		bool numbersUsed[dimension * dimension + 1];
-}
+		const static int DIMENSION = 3;
+		int board[DIMENSION][DIMENSION];
+		bool squaresUsed[DIMENSION][DIMENSION];
+		bool numbersUsed[DIMENSION * DIMENSION + 1];
+};
 
 #endif
