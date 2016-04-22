@@ -21,6 +21,21 @@ Play::~Play() {
 	board = NULL;
 }
 
+Play::Play(Play &game) {
+	turns = game.turns;
+	currentPlayer = game.currentPlayer;
+	board = new Board(*(game.board));
+}
+
+Play 
+Play::operator=(const Play& right) {
+	delete board;
+	turns = right.turns;
+	currentPlayer = right.currentPlayer;
+	board = new Board(*(right.board));
+	return *this;
+}
+
 bool 
 Play::playing() {
 	int input;		// user-given number to be played onto board
@@ -103,8 +118,7 @@ Play::updatePlayer() {
 }
 
 void 
-Play::printRules()
-{
+Play::printRules() const {
 	std::cout << "\nTic-Tac-Math is a lot like Tic-Tac-Toe. "
 		<< "The game is played on\n"
 		<< "a 3x3 grid; players take turns marking one cell "
@@ -122,7 +136,7 @@ Play::printRules()
 }
 
 void
-Play::display() {
+Play::display() const {
 	int size = board->getDimension();
 
 	std::cout << "\t   0   1   2\n" << std::endl;
@@ -148,7 +162,7 @@ Play::display() {
 }
 
 int
-Play::getIntegerInput() {
+Play::getIntegerInput() const {
 	int input;
 	while(!(std::cin >> input)) {
 		std::cout << "Not an integer! Please enter a valid integer: ";
@@ -159,7 +173,7 @@ Play::getIntegerInput() {
 }
 
 bool
-Play::isValidNumber(int input) {
+Play::isValidNumber(int input) const {
 	// checking if input is a valid number from 1 to 9
 	if (input < 1 || input > 9) {
 		return false;
@@ -169,7 +183,7 @@ Play::isValidNumber(int input) {
 }
 
 bool
-Play::isUsedNumber(int input) {
+Play::isUsedNumber(int input) const {
 	if (board->isUsedNumber(input)) {
 		return true;
 	}
@@ -178,7 +192,7 @@ Play::isUsedNumber(int input) {
 }
 
 bool
-Play::isValidSquare(int x, int y) {
+Play::isValidSquare(int x, int y) const {
 	// checking if the x and y are within the board's dimensions
 	if (x < 0 || x > board->getDimension() - 1 ||
 			y < 0 || y > board->getDimension() - 1) {
@@ -189,7 +203,7 @@ Play::isValidSquare(int x, int y) {
 }
 
 bool
-Play::isUsedSquare(int x, int y) {
+Play::isUsedSquare(int x, int y) const {
 	if (board->getNumber(x, y)) {
 		return true;
 	}
@@ -198,7 +212,7 @@ Play::isUsedSquare(int x, int y) {
 }
 
 bool
-Play::checkForWin(int x, int y, int input) {
+Play::checkForWin(int x, int y, int input) const {
 	int size = board->getDimension();
 	
 	// check if the row containing the input sums to 15

@@ -6,18 +6,22 @@
 class Board {
 	public:
 		static Board* setup();
-		int getNumber(int x, int y);
-		int getDimension();
+		~Board();
+		Board(Board& board);
+		Board operator=(const Board& right);
+		int getNumber(int x, int y) const;
+		int getDimension() const;
 		void setSquare(int x, int y, int input);	// updates board, squaresUsed and numbersUsed
-		bool isUsedNumber(int number);
+		bool isUsedNumber(int number) const;
 
 	private:
 		Board();
-		
+
 		const static int DIMENSION = 3;
-		int board[DIMENSION][DIMENSION];
-		bool squaresUsed[DIMENSION][DIMENSION];
-		bool numbersUsed[DIMENSION * DIMENSION + 1];
+		const static int NUMCOUNT = DIMENSION * DIMENSION + 1;
+		int* board[DIMENSION];
+		bool* squaresUsed[DIMENSION];
+		bool* numbersUsed;
 };
 
 #endif
