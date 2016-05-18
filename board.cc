@@ -35,7 +35,7 @@ Board::~Board() {
 		delete squaresUsed[i];
 		squaresUsed[i] = NULL;
 	}
-	delete numbersUsed;
+	delete [] numbersUsed;
 	numbersUsed = NULL;
 }
 
