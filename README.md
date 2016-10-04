@@ -17,7 +17,7 @@ board.
 
 1. Clone this repo into your own local machine.
 
-2. Type 'make' to compile the game.
+2. Type `make` to compile the game.
 
 3. Run the game by typing './TicTacMath'.
 
