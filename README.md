@@ -19,6 +19,6 @@ board.
 
 2. Type `make` to compile the game.
 
-3. Run the game by typing './TicTacMath'.
+3. Run the game by typing `./TicTacMath`.
 
 4. Enjoy!
